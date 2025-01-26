@@ -15,6 +15,12 @@ function App() {
 
   }
 
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter") {
+      handleAddTodo()
+    }
+  }
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTodo(event.target.value)
   }
@@ -27,12 +33,17 @@ function App() {
         <div className='w-auto text-white  gap-12' >
           <input
             value={todo}
+            onKeyDown={handleKeyDown}
             onChange={handleInputChange}
             className='bg-white text-black border-b-black w-80'
             type="text"
             placeholder='Enter your task' />
-          <button onClick={handleAddTodo}
-            className='bg-blue-500 mx-10  text-white rounded-lg p-1'>Add Task</button>
+
+          <button
+            onClick={handleAddTodo}
+            className='bg-blue-500 mx-10  text-white rounded-lg p-1'>Add Task
+          </button>
+
         </div>
         <TodoDisplay />
       </div >

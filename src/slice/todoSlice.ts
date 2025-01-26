@@ -32,7 +32,17 @@ const todoSlice = createSlice({
             state.todos = state.todos.filter((todo) => {
                 return todo.id !== action.payload
             })
+        },
+        editTodo: (state, action: PayloadAction<{ id: number, todoTitle: string }>) => {
+            const { id, todoTitle } = action.payload
+            const editTodo = state.todos.find((todo) => {
+                return todo.id === id
+            })
+            if (editTodo) {
+                editTodo.todoTitle = todoTitle
+            }
         }
+
 
     },
 })

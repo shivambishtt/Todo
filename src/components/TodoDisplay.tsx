@@ -6,18 +6,21 @@ import { removeTodo } from '../slice/todoSlice.ts'
 function TodoDisplay() {
     const dispatch = useDispatch()
     const todos = useSelector((state: RootState) => state.todo.todos)
+
     const handleRemove = (id: number) => {
         dispatch(removeTodo(id))
     }
 
+
     return (
         < div className='bg-white h-50 w-2xl flex gap-8 text-black'>
             <div>
-                <div className=''>
+                <div >
                     {todos?.map((todo) => {
-                        return <li key={todo.id} >
+                        return <li
+                            key={todo.id} >
                             <span>{todo.todoTitle}</span>
-                            <button onClick={() => handleRemove(todo.id)} className='bg-red-200'>❌</button>
+                            <button onClick={() => handleRemove(todo.id)} className=' bg-red-200'>❌</button>
                         </li>
                     })}
                 </div>
