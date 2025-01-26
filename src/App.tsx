@@ -1,37 +1,43 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { addTodo } from './slice/todoSlice.ts'
+import TodoDisplay from './components/TodoDisplay.tsx'
+
 function App() {
-  const [online, setOnline] = useState<boolean>(navigator.onLine)
+  const dispatch = useDispatch()
+  const [todo, setTodo] = useState("")
 
-
-  useEffect(() => {
-    const handleOnline = () => {
-      setOnline(true)
-    }
-    const handleOffline = () => {
-      setOnline(false)
+  const handleAddTodo = () => {
+    if (todo.length !== 0) {
+      dispatch(addTodo(todo))
+      setTodo("")
     }
 
+  }
 
-    window.addEventListener("online", handleOnline)
-    window.addEventListener("offline", handleOffline)
-
-
-    return () => {
-      window.removeEventListener("online", handleOnline)
-      window.removeEventListener("offline", handleOffline)
-    }
-  }, [])
-
-
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTodo(event.target.value)
+  }
   return (
+    <>
+      <div style={{
+        background: 'linear-gradient(135deg, #6a11cb, #2575fc)', color: '#fff', height: "100vh"
+      }} className=' px-90 py-20 '>
+        <h1 className=' font-extrabold text-4xl '>Todo App</h1>
+        <div className='w-auto text-white  gap-12' >
+          <input
+            value={todo}
+            onChange={handleInputChange}
+            className='bg-white text-black border-b-black w-80'
+            type="text"
+            placeholder='Enter your task' />
+          <button onClick={handleAddTodo}
+            className='bg-blue-500 mx-10  text-white rounded-lg p-1'>Add Task</button>
+        </div>
+        <TodoDisplay />
+      </div >
+    </>
 
-    <div className='flex justify-center items-center my-7'>
-      <div className='bg-gray-600 w-auto text-white' >
-        <h1>
-          {online ? "" : "OOPS! Check your internet connection 👀"}
-        </h1>
-      </div>
-    </div>
 
   )
 }
